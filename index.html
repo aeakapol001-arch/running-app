@@ -129,7 +129,7 @@ body { min-height: 100vh; background: #0a0a0f; font-family: 'Sarabun', sans-seri
 </div>
 
 <script>
-const SITE_URL = 'REPLACE_WITH_VERCEL_URL';
+const SITE_URL = 'https://running-app-neon.vercel.app';
 
 const schedule = [
   {date:1,  day:"จ",  km:3,  rest:false},
@@ -347,48 +347,4 @@ function loadWeather(){
       dates.forEach((dt,i)=>{
         const day=parseInt(dt.split('-')[2]);
         const s=schedule.find(x=>x.date===day);
-        const temp=temps[i],rain=rains[i],wind=winds[i];
-        let icon='☀️',tag='<span class="weather-tag tag-good">เหมาะวิ่ง</span>';
-        if(rain>5){icon='🌧️';tag='<span class="weather-tag tag-rain">ฝนตก</span>';}
-        else if(rain>0.5){icon='🌦️';tag='<span class="weather-tag tag-rain">ฝนปรอย</span>';}
-        else if(temp>35){icon='🥵';tag='<span class="weather-tag tag-hot">ร้อนมาก</span>';}
-        else if(temp>32){icon='☀️';tag='<span class="weather-tag tag-hot">ร้อน</span>';}
-        else if(wind>30){icon='💨';tag='<span class="weather-tag tag-wind">ลมแรง</span>';}
-        const rest=s&&s.rest?' <span style="color:#555;font-size:11px">(พัก)</span>':'';
-        html+=`<div class="weather-bar"><div class="weather-date">${day}</div><div class="weather-icon-lg">${icon}</div><div class="weather-info"><div class="weather-temp">${temp}°C · ฝน ${rain}มม.${rest}</div><div class="weather-detail">ลม ${wind} กม./ชม.</div></div>${tag}</div>`;
-      });
-      wc.innerHTML=html;
-    } catch(e){wc.innerHTML='<div class="no-data">โหลดข้อมูลไม่ได้ครับ</div>';}
-  },()=>{wc.innerHTML='<div class="no-data">ไม่ได้รับอนุญาตให้เข้าถึงตำแหน่งครับ</div>';});
-}
-
-// OAuth callback
-const params=new URLSearchParams(window.location.search);
-const code=params.get('code');
-if(code){
-  history.replaceState({},'','/');
-  fetch(`/api/strava-token?code=${code}`)
-    .then(r=>r.json())
-    .then(data=>{
-      if(data.access_token){
-        localStorage.setItem('strava_token',data.access_token);
-        syncStrava(data.access_token);
-      } else { alert('เชื่อมต่อไม่สำเร็จ: '+JSON.stringify(data)); }
-    });
-} else {
-  const token=localStorage.getItem('strava_token');
-  if(token){
-    document.getElementById('main-btn').textContent='🔄 Sync Strava';
-    document.getElementById('main-btn').className='btn-green';
-    document.getElementById('main-btn').onclick=()=>syncStrava(token);
-    document.getElementById('reconnect-btn').style.display='block';
-    document.getElementById('strava-ok').style.display='block';
-    document.getElementById('strava-ok').innerHTML='✅ เชื่อมต่อ Strava แล้ว';
-    document.getElementById('sum-strava').textContent=Object.keys(stravaRuns).length;
-  }
-}
-renderCalendar();
-updateProgress();
-</script>
-</body>
-</html>
+        const temp=temps[
